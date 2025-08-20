@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyPAL+ 注册</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container register-mode">
+        <div class="auth-card">
+            <div class="brand-header">
+                <h1>StudyPAL+</h1>
+                <p>创建您的学习账户</p>
+            </div>
+            
+            <form id="registerForm" class="auth-form">
+                <div class="input-group">
+                    <input type="text" id="name" name="name" required>
+                    <label for="name">姓名</label>
+                    <div class="underline"></div>
+                </div>
+                
+                <div class="input-group">
+                    <input type="text" id="studentId" name="student_id" required>
+                    <label for="studentId">学号</label>
+                    <div class="underline"></div>
+                </div>
+                
+                <div class="input-group">
+                    <input type="text" id="major" name="major" required>
+                    <label for="major">专业</label>
+                    <div class="underline"></div>
+                </div>
+                
+                <div class="input-group">
+                    <input type="password" id="password" name="password" required>
+                    <label for="password">密码</label>
+                    <div class="underline"></div>
+                </div>
+                
+                <div class="input-group">
+                    <input type="password" id="confirmPassword" name="confirm_password" required>
+                    <label for="confirmPassword">确认密码</label>
+                    <div class="underline"></div>
+                </div>
+                
+                <div class="auth-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <span class="checkmark"></span>
+                        我同意 <a href="#">服务条款</a> 和 <a href="#">隐私政策</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="auth-submit">
+                    <span>注 册</span>
+                    <i>→</i>
+                </button>
+            </form>
+            
+            <div class="auth-footer">
+                <p>已有账户？<a href="login.html">立即登录</a></p>
+            </div>
+        </div>
+        
+        <div class="decoration-shapes">
+            <div class="shape-1"></div>
+            <div class="shape-2"></div>
+        </div>
+    </div>
+    
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // 检查用户是否已登录
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn) {
+                // 用户已登录，重定向到仪表盘
+                window.location.href = 'dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>

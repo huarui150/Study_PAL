@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学习计划 - StudyPAL+</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="brand">StudyPAL+</h1>
+                <p class="brand-subtitle">智能学习伙伴</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <span class="icon">📊</span>
+                            <span class="text">仪表盘</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="courses.html">
+                            <span class="icon">📚</span>
+                            <span class="text">课程</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="plans.html">
+                            <span class="icon">📝</span>
+                            <span class="text">学习计划</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ai-tutor.html">
+                            <span class="icon">🤖</span>
+                            <span class="text">AI辅导</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="achievements.html">
+                            <span class="icon">🏆</span>
+                            <span class="text">成就</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" class="logout-btn" id="logoutBtn">
+                    <span class="icon">🚪</span>
+                    <span class="text">退出登录</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 顶部导航 -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h2>学习计划</h2>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-info">
+                        <span class="user-name" id="userName">用户</span>
+                        <div class="user-avatar">👤</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 内容区域 -->
+            <div class="content">
+                <div class="content-header">
+                    <div class="header-left">
+                        <h2>学习计划</h2>
+                        <p>管理你的学习计划，AI智能推荐，高效番茄钟专注</p>
+                    </div>
+                    <div class="header-right">
+                        <button class="btn btn-outline" id="refreshSuggestionsBtn">🔄 刷新建议</button>
+                        <button class="btn btn-primary" id="addPlanBtn">➕ 添加计划</button>
+                    </div>
+                </div>
+
+                <!-- 分组卡片区 -->
+                <div class="section-grid">
+                    <!-- AI建议面板 -->
+                    <div class="ai-suggestions-panel">
+                        <div class="panel-header">
+                            <h4>🤖 今日AI推荐</h4>
+                            <div class="recommendation-info">
+                                <span id="lastUpdateTime">更新于: --:--</span>
+                            </div>
+                        </div>
+                        <div class="suggestions-content">
+                            <div class="daily-summary">
+                                <div class="summary-item">
+                                    <span class="label">推荐模式:</span>
+                                    <span class="value" id="recommendedMode">标准模式</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">目标番茄:</span>
+                                    <span class="value" id="targetPomodoros">未设置</span>
+                                    <button class="btn-mini" id="setTargetBtn" onclick="openSetTargetModal()">⚙️</button>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">疲劳度:</span>
+                                    <span class="value fatigue-indicator" id="fatigueLevel">低</span>
+                                </div>
+                            </div>
+                            <div class="suggested-order" id="suggestedOrder">
+                                <!-- AI推荐的学习顺序将在这里显示 -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 快速操作 -->
+                    <div class="quick-actions">
+                        <h4>⚡ 快速操作</h4>
+                        <div class="action-buttons">
+                            <button class="action-btn" id="startFocusBtn">
+                                <span class="action-icon">🎯</span>
+                                <span class="action-text">开始专注</span>
+                            </button>
+                            <button class="action-btn" id="reviewNotesBtn">
+                                <span class="action-icon">📝</span>
+                                <span class="action-text">复习笔记</span>
+                            </button>
+                            <button class="action-btn" id="weeklyReportBtn">
+                                <span class="action-icon">📊</span>
+                                <span class="action-text">周报告</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 番茄学习法说明卡片 -->
+                    <div class="info-card pomodoro-info">
+                        <h4>🍅 什么是番茄学习法</h4>
+                        <ul class="pomodoro-points">
+                            <li><strong>一个番茄</strong>：专注25分钟 + 休息5分钟</li>
+                            <li><strong>四个番茄后</strong>：进行一次15分钟长休息</li>
+                            <li><strong>目标</strong>：用固定节奏防止疲劳、提升专注</li>
+                            <li><strong>建议</strong>：中断>90秒计失败，记录原因做复盘</li>
+                        </ul>
+                        <div class="pomodoro-modes">
+                            <span class="mode-tag">标准 25/5</span>
+                            <span class="mode-tag">深度 50/10</span>
+                            <span class="mode-tag">冲刺 35/7</span>
+                            <span class="mode-tag">自适应 智能</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 统计卡片 -->
+                <div class="stats-grid" style="margin-top: 10px;">
+                    <div class="stat-card">
+                        <div class="stat-icon">📋</div>
+                        <div class="stat-info">
+                            <h3>今日计划</h3>
+                            <p class="stat-value"><span id="todayPlansCount">0</span> 个</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <h3>已完成</h3>
+                            <p class="stat-value"><span id="completedPlansCount">0</span> 个</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🍅</div>
+                        <div class="stat-info">
+                            <h3>番茄时段</h3>
+                            <p class="stat-value"><span id="pomodoroCount">0</span> 个</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-info">
+                            <h3>专注时长</h3>
+                            <p class="stat-value"><span id="focusTimeCount">0</span> 分钟</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 筛选条 -->
+                <div class="filter-bar">
+                    <div class="filter-controls">
+                        <select id="statusFilter" class="filter-select">
+                            <option value="all">全部状态</option>
+                            <option value="pending">待完成</option>
+                            <option value="in_progress">进行中</option>
+                            <option value="completed">已完成</option>
+                            <option value="overdue">已过期</option>
+                        </select>
+                        <select id="sortBy" class="filter-select">
+                            <option value="priority">按优先级</option>
+                            <option value="deadline">按截止日期</option>
+                            <option value="difficulty">按难度</option>
+                            <option value="created">按创建时间</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 计划网格 -->
+                <div class="plans-grid" id="plansGrid">
+                    <!-- 添加计划卡片 -->
+                    <div class="plan-card add-plan-card" onclick="openAddPlanModal()">
+                        <div class="add-plan-content">
+                            <div style="font-size: 48px; margin-bottom: 10px;">➕</div>
+                            <div style="font-size: 16px; font-weight: 500;">添加新计划</div>
+                            <div style="font-size: 12px; margin-top: 5px;">关联课程并开始专注</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 空状态 -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-state-icon">📋</div>
+                    <h3>还没有学习计划</h3>
+                    <p>点击上方按钮创建你的第一个学习计划</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 添加计划模态框 -->
+    <div class="modal" id="addPlanModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加学习计划</h3>
+                <span class="close" id="closeModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="addPlanForm" novalidate>
+                    <div class="form-group">
+                        <label for="planTitle">计划标题</label>
+                        <input type="text" id="planTitle">
+                    </div>
+                    <div class="form-group">
+                        <label for="planCourse">关联课程</label>
+                        <input type="text" id="planCourse" placeholder="请输入课程名称">
+                    </div>
+                    <div class="form-group">
+                        <label for="planTopic">主题</label>
+                        <input type="text" id="planTopic">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="planEstimate">预估时长（分钟）</label>
+                            <input type="number" id="planEstimate" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="planDeadline">截止日期</label>
+                            <input type="date" id="planDeadline">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="planDifficulty">难度 (1-5)</label>
+                            <select id="planDifficulty">
+                                <option value="1">1 - 很简单</option>
+                                <option value="2">2 - 简单</option>
+                                <option value="3" selected>3 - 一般</option>
+                                <option value="4">4 - 困难</option>
+                                <option value="5">5 - 很困难</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="planImportance">重要性 (1-5)</label>
+                            <select id="planImportance">
+                                <option value="1">1 - 不重要</option>
+                                <option value="2">2 - 较不重要</option>
+                                <option value="3">3 - 一般</option>
+                                <option value="4">4 - 重要</option>
+                                <option value="5" selected>5 - 很重要</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">添加计划</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 设置目标模态框 -->
+    <div class="modal" id="setTargetModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>设置每日番茄目标</h3>
+                <span class="close" onclick="closeSetTargetModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="setTargetForm">
+                    <div class="form-group">
+                        <label for="dailyTarget">每日目标番茄数：</label>
+                        <input type="number" id="dailyTarget" min="0" max="20" step="1" 
+                               placeholder="0表示无目标" value="0" required>
+                        <small>建议：3-8个番茄适合大多数人</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="preferredMode">偏好模式：</label>
+                        <select id="preferredMode" required>
+                            <option value="标准模式">标准模式 (25分钟)</option>
+                            <option value="深度模式">深度模式 (50分钟)</option>
+                            <option value="冲刺模式">冲刺模式 (35分钟)</option>
+                            <option value="自适应模式">自适应模式 (智能调整)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">保存设置</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js?v=2024120802"></script>
+    <script src="script.js?v=2024120802"></script>
+    <script src="plans.js?v=2024120802"></script>
+</body>
+</html>

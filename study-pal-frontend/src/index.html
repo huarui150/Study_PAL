@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyPAL+ 智能学习伙伴</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="landing-container">
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>StudyPAL+</h1>
+            </div>
+            <div class="nav-links">
+                <a href="#features">功能特性</a>
+                <a href="login.html" class="btn-outline" id="loginLink">登录</a>
+                <a href="register.html" class="btn-primary" id="registerLink">注册</a>
+            </div>
+        </nav>
+
+        <!-- 英雄区域 -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">您的AI智能学习伙伴</h1>
+                <p class="hero-subtitle">通过人工智能技术，为您提供个性化的学习计划、课程管理和智能辅导</p>
+                <div class="hero-actions">
+                    <a href="register.html" class="btn-primary btn-large" id="ctaButton">开始学习之旅</a>
+                    <a href="#features" class="btn-outline btn-large">了解更多</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="floating-card card-1">
+                    <h3>智能课表</h3>
+                    <p>自动优化您的学习时间安排</p>
+                </div>
+                <div class="floating-card card-2">
+                    <h3>AI辅导</h3>
+                    <p>24/7在线答疑解惑</p>
+                </div>
+                <div class="floating-card card-3">
+                    <h3>学习分析</h3>
+                    <p>深度洞察学习效率</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 功能特性 -->
+        <section id="features" class="features-section">
+            <div class="section-header">
+                <h2>核心功能</h2>
+                <p>为您的学习之路提供全方位智能支持</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>智能课表管理</h3>
+                    <p>自动同步和优化您的课程安排，智能提醒上课时间</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI学习助手</h3>
+                    <p>24小时在线答疑，提供个性化学习建议</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>学习数据分析</h3>
+                    <p>深度分析学习行为，提供效率优化方案</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>游戏化激励</h3>
+                    <p>成就系统和奖励机制，让学习更有趣</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 学术装饰元素 -->
+        <div class="decoration-shapes">
+            <div class="shape-1"></div>
+            <div class="shape-2"></div>
+            <div class="shape-3"></div>
+            <div class="shape-4"></div>
+            <div class="shape-5"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // 检查用户登录状态并更新导航链接
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            
+            if (isLoggedIn) {
+                // 用户已登录，更新导航链接
+                document.getElementById('loginLink').textContent = '仪表盘';
+                document.getElementById('loginLink').href = 'dashboard.html';
+                document.getElementById('registerLink').textContent = '退出';
+                document.getElementById('registerLink').href = '#';
+                document.getElementById('registerLink').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // 清除登录状态
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('userInfo');
+                    // 刷新页面以更新状态
+                    location.reload();
+                });
+                
+                // 更新CTA按钮
+                document.getElementById('ctaButton').textContent = '进入学习';
+                document.getElementById('ctaButton').href = 'dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>

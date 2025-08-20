@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyPAL+ 仪表盘</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>StudyPAL+</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+                        <a href="dashboard.html">
+                            <span class="icon">🏠</span>
+                            <span class="text">仪表盘</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="courses.html">
+                            <span class="icon">📚</span>
+                            <span class="text">课程</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="plans.html">
+                            <span class="icon">📝</span>
+                            <span class="text">学习计划</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ai-tutor.html">
+                            <span class="icon">🤖</span>
+                            <span class="text">AI辅导</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="achievements.html">
+                            <span class="icon">🏆</span>
+                            <span class="text">成就</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" class="logout-btn" id="logoutBtn">
+                    <span class="icon">🚪</span>
+                    <span class="text">退出登录</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 顶部导航 -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h2>学习仪表盘</h2>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-info">
+                        <span class="user-name" id="userName">用户</span>
+                        <div class="user-avatar">👤</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 内容区域 -->
+            <div class="content">
+               <div class="stats-grid">
+    <!-- 学习语录 -->
+    <div class="stat-card">
+        <div class="stat-icon">💡</div>
+        <div class="stat-info">
+            <h3>学习语录</h3>
+            <p class="stat-value">“专注是一种习惯，而不是一时的冲动。”</p>
+        </div>
+    </div>
+    <!-- 激励语录 -->
+    <div class="stat-card">
+        <div class="stat-icon">🚀</div>
+        <div class="stat-info">
+            <h3>激励语录</h3>
+            <p class="stat-value">“每一次坚持，都是离目标更近的一步。”</p>
+        </div>
+    </div>
+    <!-- 学习公式 -->
+    <div class="stat-card">
+        <div class="stat-icon">📐</div>
+        <div class="stat-info">
+            <h3>学习公式</h3>
+            <p class="stat-value">效率 = 专注时间 ÷ 总学习时间</p>
+        </div>
+    </div>
+    <!-- 成长公式 -->
+    <div class="stat-card">
+        <div class="stat-icon">🔢</div>
+        <div class="stat-info">
+            <h3>成长公式</h3>
+            <p class="stat-value">进步 = 每日积累 × 持续天数</p>
+        </div>
+    </div>
+</div>
+
+
+                <div class="recent-activity">
+                    <h3>近期活动</h3>
+                    <div class="activity-list" id="activityList">
+                        <div class="empty-state" id="activityEmpty">
+                            <div class="empty-state-icon">📝</div>
+                            <h4>暂无活动记录</h4>
+                            <p>开始学习后这里会显示您的学习活动</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // 检查用户是否已登录并加载真实数据
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // 显示用户信息
+            const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+            if (userInfo) {
+                document.getElementById('userName').textContent = userInfo.name;
+                loadDashboardData(userInfo);
+            }
+        });
+
+        // 加载仪表盘真实数据
+        function loadDashboardData(userInfo) {
+            const userId = userInfo.id || userInfo.student_id || 1;
+            
+            // 加载番茄钟和专注时长数据
+            loadPomodoroStats(userId);
+            
+            // 加载成就数据
+            loadAchievementStats(userId);
+        }
+
+        function loadPomodoroStats(userId) {
+            try {
+                console.log('[DEBUG] Loading pomodoro stats for user:', userId);
+                // 从后端API获取番茄钟统计
+                fetch(getApiUrl('/pomodoro/stats?user_id=' + userId))
+                    .then(response => {
+                        console.log('[DEBUG] Pomodoro stats response status:', response.status);
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('[DEBUG] Pomodoro stats data:', data);
+                        const todayPomodoros = data.today_pomodoros || 0;
+                        const todayFocusTime = data.today_focus_time || 0;
+                        
+                        document.getElementById('todayPomodoros').textContent = todayPomodoros;
+                        document.getElementById('focusTime').textContent = todayFocusTime;
+                        
+                        console.log('[DEBUG] Updated display - Pomodoros:', todayPomodoros, 'Focus time:', todayFocusTime);
+                    })
+                    .catch((error) => {
+                        console.error('[ERROR] Failed to load pomodoro stats from API:', error);
+                        // 如果后端API失败，回退到localStorage
+                        const today = new Date().toISOString().split('T')[0];
+                        const sessionKey = `pomodoro_sessions_user_${userId}`;
+                        const sessions = JSON.parse(localStorage.getItem(sessionKey)) || [];
+                        
+                        const todaySessions = sessions.filter(session => 
+                            session.date === today && session.completed === true
+                        );
+                        
+                        const totalPomodoros = todaySessions.length;
+                        const totalFocusTime = todaySessions.reduce((total, session) => 
+                            total + (session.duration || 25), 0
+                        );
+                        
+                        document.getElementById('todayPomodoros').textContent = totalPomodoros;
+                        document.getElementById('focusTime').textContent = totalFocusTime;
+                        
+                        console.log('[DEBUG] Fallback to localStorage - Pomodoros:', totalPomodoros, 'Focus time:', totalFocusTime);
+                    });
+            } catch (error) {
+                console.error('[ERROR] Load pomodoro stats failed:', error);
+            }
+        }
+
+        function loadAchievementStats(userId) {
+            console.log('[DEBUG] Loading achievement stats for user:', userId);
+            
+            // 使用与achievements页面相同的数据加载逻辑
+            const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+            const achievementsUrl = userInfo && userInfo.id ?
+                getApiUrl(`/achievements/${encodeURIComponent(userInfo.id)}`) :
+                getApiUrl('/achievements');
+                
+            fetch(achievementsUrl)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('[DEBUG] Achievements data:', data);
+                    
+                    // 更新成就数量 - 与achievements页面保持一致
+                    const achievementCount = data.achievements ? data.achievements.length : 0;
+                    document.getElementById('achievementCount').textContent = achievementCount;
+                    
+                    // 更新连续登录天数
+                    const loginStreak = data.stats ? data.stats.login_streak || 0 : 0;
+                    document.getElementById('loginStreak').textContent = loginStreak;
+                    
+                    console.log('[DEBUG] Updated display - Achievements:', achievementCount, 'Login streak:', loginStreak);
+                    
+                    // 加载真实活动记录
+                    loadRecentActivities();
+                })
+                .catch(error => {
+                    console.error('[ERROR] Load achievement stats failed:', error);
+                });
+        }
+        
+        function loadRecentActivities() {
+            const activityList = document.getElementById('activityList');
+            const activityEmpty = document.getElementById('activityEmpty');
+            
+            // 加载真实活动记录
+            fetch(getApiUrl('/activities'))
+                .then(response => response.json())
+                .then(data => {
+                    const activities = data.activities || [];
+                    
+                    if (activities.length > 0) {
+                        activityEmpty.style.display = 'none';
+                        // 只显示前2个活动记录
+                        const displayActivities = activities.slice(0, 2);
+                        activityList.innerHTML = displayActivities.map(activity => `
+                            <div class="activity-item">
+                                <div class="activity-icon">${activity.icon}</div>
+                                <div class="activity-content">
+                                    <h4>${activity.title}</h4>
+                                    <p>${activity.description}</p>
+                                    <span class="activity-time">${activity.time}</span>
+                                </div>
+                            </div>
+                        `).join('');
+                    } else {
+                        activityEmpty.style.display = 'block';
+                        activityList.innerHTML = '';
+                    }
+                })
+                .catch(error => {
+                    console.error('加载活动记录失败:', error);
+                    activityEmpty.style.display = 'block';
+                    activityList.innerHTML = '';
+                });
+        }
+        
+        // 绑定退出登录事件
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 清除本地存储的用户信息
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('userInfo');
+                    localStorage.removeItem('token');
+                    
+                    // 跳转到登录页面
+                    window.location.href = 'login.html';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

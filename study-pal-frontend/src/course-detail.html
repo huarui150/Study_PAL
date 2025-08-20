@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyPAL+ 课程详情</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .course-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .course-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+        }
+        
+        .course-meta {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            opacity: 0.9;
+        }
+        
+        .meta-item {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            color: #007bff;
+            border-bottom-color: #007bff;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .upload-area {
+            border: 2px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: border-color 0.3s, background-color 0.3s;
+            cursor: pointer;
+        }
+        
+        .upload-area:hover {
+            border-color: #007bff;
+            background: #f8f9ff;
+        }
+        
+        .upload-area.dragover {
+            border-color: #007bff;
+            background: #e3f2fd;
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        .upload-text {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .upload-hint {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .material-list {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .material-item {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .material-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        
+        .material-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .material-icon.pdf { background: #dc3545; }
+        .material-icon.ppt { background: #fd7e14; }
+        .material-icon.doc { background: #007bff; }
+        .material-icon.image { background: #28a745; }
+        
+        .material-info {
+            flex: 1;
+        }
+        
+        .material-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 0 5px 0;
+            color: #333;
+        }
+        
+        .material-meta {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .material-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        
+        .btn-generate {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-generate:hover {
+            background: #1e7e34;
+        }
+        
+        .btn-view {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-view:hover {
+            background: #0056b3;
+        }
+        
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-delete:hover {
+            background: #c82333;
+        }
+        
+        .card-preview {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .card-section {
+            margin-bottom: 25px;
+        }
+        
+        .card-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .key-points {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .key-points li {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        
+        .terms-grid {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .term-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .term-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .term-definition {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .examples-grid {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .example-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .example-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .example-content {
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        .example-solution {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 3px solid #007bff;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 4px;
+            height: 8px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: #007bff;
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>StudyPAL+</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <span class="icon">🏠</span>
+                            <span class="text">仪表盘</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="courses.html">
+                            <span class="icon">📚</span>
+                            <span class="text">课程</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="plans.html">
+                            <span class="icon">📋</span>
+                            <span class="text">学习计划</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ai-tutor.html">
+                            <span class="icon">🤖</span>
+                            <span class="text">AI辅导</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="achievements.html">
+                            <span class="icon">🏆</span>
+                            <span class="text">成就</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <span class="user-name" id="userName">用户</span>
+                    <button class="logout-btn" onclick="logout()">退出</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 课程标题区域 -->
+            <div class="course-header" id="courseHeader">
+                <h1 class="course-title" id="courseTitle">加载中...</h1>
+                <div class="course-meta" id="courseMeta">
+                    <div class="meta-item">权重: <span id="courseWeight">-</span></div>
+                    <div class="meta-item">考试权重: <span id="examRatio">-</span></div>
+                    <div class="meta-item">资料数量: <span id="materialCount">-</span></div>
+                </div>
+            </div>
+
+            <!-- 标签页 -->
+            <div class="tabs">
+                <button class="tab active" data-tab="materials">📁 学习资料</button>
+                <button class="tab" data-tab="cards">🎴 知识卡片</button>
+                <button class="tab" data-tab="quiz">📝 测验题</button>
+                
+            </div>
+
+            <!-- 学习资料标签页 -->
+            <div class="tab-content active" id="materials">
+                <!-- 上传区域 -->
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📁</div>
+                    <div class="upload-text">拖拽文件到这里或点击上传</div>
+                    <div class="upload-hint">支持 PDF、PPT、Word、图片格式，最大50MB</div>
+                    <input type="file" id="fileInput" multiple accept=".pdf,.ppt,.pptx,.doc,.docx,.png,.jpg,.jpeg,.gif" style="display: none;">
+                </div>
+
+                <!-- 上传进度 -->
+                <div id="uploadProgress" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span id="uploadText">正在上传...</span>
+                        <span id="uploadPercent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <!-- 资料列表 -->
+                <div class="material-list" id="materialList">
+                    <!-- 资料项将动态插入这里 -->
+                </div>
+
+                <!-- 空状态 -->
+                <div class="empty-state" id="materialsEmpty" style="display: none;">
+                    <div class="empty-state-icon">📚</div>
+                    <h3>还没有学习资料</h3>
+                    <p>上传PDF、PPT、Word或图片文件开始学习</p>
+                </div>
+            </div>
+
+            <!-- 知识卡片标签页 -->
+            <div class="tab-content" id="cards">
+                <div id="cardsLoading" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>正在生成知识卡片...</p>
+                </div>
+                
+                <div id="cardsContent">
+                    <!-- 知识卡片内容将动态插入这里 -->
+                </div>
+
+                <div class="empty-state" id="cardsEmpty">
+                    <div class="empty-state-icon">🎴</div>
+                    <h3>还没有知识卡片</h3>
+                    <p>上传学习资料后，点击"生成卡片"按钮创建智能学习卡片</p>
+                </div>
+            </div>
+
+            <!-- 测验题标签页 -->
+            <div class="tab-content" id="quiz">
+                <div id="quizContent">
+                    <!-- 测验内容将动态插入这里 -->
+                </div>
+
+                <div class="empty-state" id="quizEmpty">
+                    <div class="empty-state-icon">📝</div>
+                    <h3>还没有测验题</h3>
+                    <p>生成知识卡片后会自动创建相关测验题</p>
+                </div>
+            </div>
+
+            
+        </main>
+    </div>
+
+    <script src="course-detail.js"></script>
+</body>
+</html>

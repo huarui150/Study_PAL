@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计划详情 - StudyPAL+</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="brand">StudyPAL+</h1>
+                <p class="brand-subtitle">智能学习伙伴</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <span class="icon">📊</span>
+                            <span class="text">仪表盘</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="courses.html">
+                            <span class="icon">📚</span>
+                            <span class="text">课程</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="plans.html">
+                            <span class="icon">🎯</span>
+                            <span class="text">计划</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ai-tutor.html">
+                            <span class="icon">🤖</span>
+                            <span class="text">AI辅导</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon">🏆</span>
+                            <span class="text">成就</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" class="logout-btn" id="logoutBtn">
+                    <span class="icon">🚪</span>
+                    <span class="text">退出登录</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 顶部导航 -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h2>计划详情</h2>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-info">
+                        <span class="user-name" id="userName">用户</span>
+                        <div class="user-avatar">👤</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 内容区域 -->
+            <div class="content">
+                <div class="content-header">
+                    <button class="btn btn-secondary" onclick="window.location.href='plans.html'">← 返回计划列表</button>
+                </div>
+
+                <div class="plan-detail-container">
+                    <div class="plan-header">
+                        <h3 id="planTitle">计划标题</h3>
+                        <span class="plan-status" id="planStatus">待完成</span>
+                    </div>
+
+                    <div class="plan-info-grid">
+                        <div class="info-card">
+                            <div class="info-label">关联课程</div>
+                            <div class="info-value" id="planCourse">课程名称</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">主题</div>
+                            <div class="info-value" id="planTopic">主题内容</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">预估时长</div>
+                            <div class="info-value" id="planEstimate">0 分钟</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">截止日期</div>
+                            <div class="info-value" id="planDeadline">YYYY-MM-DD</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">难度</div>
+                            <div class="info-value" id="planDifficulty">3</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">重要性</div>
+                            <div class="info-value" id="planImportance">3</div>
+                        </div>
+                    </div>
+
+                    <!-- 番茄钟区域 -->
+                    <div class="pomodoro-section">
+                        <div class="pomodoro-header">
+                            <h4>🍅 智能番茄钟</h4>
+                            <div class="ai-recommendation" id="aiRecommendation">
+                                <span class="recommendation-text">AI推荐: 标准模式</span>
+                            </div>
+                        </div>
+
+                        <!-- 模式选择 -->
+                        <div class="mode-selection">
+                            <div class="mode-tabs">
+                                <button class="mode-tab active" data-mode="standard">
+                                    <span class="mode-icon">📚</span>
+                                    <span class="mode-name">标准</span>
+                                    <span class="mode-timing">25/5</span>
+                                </button>
+                                <button class="mode-tab" data-mode="deep">
+                                    <span class="mode-icon">🎯</span>
+                                    <span class="mode-name">深度</span>
+                                    <span class="mode-timing">50/10</span>
+                                </button>
+                                <button class="mode-tab" data-mode="sprint">
+                                    <span class="mode-icon">⚡</span>
+                                    <span class="mode-name">冲刺</span>
+                                    <span class="mode-timing">35/7</span>
+                                </button>
+                                <button class="mode-tab" data-mode="adaptive">
+                                    <span class="mode-icon">🤖</span>
+                                    <span class="mode-name">自适应</span>
+                                    <span class="mode-timing">智能</span>
+                                </button>
+                                <button class="mode-tab" data-mode="custom">
+                                    <span class="mode-icon">⚙️</span>
+                                    <span class="mode-name">自定义</span>
+                                    <span class="mode-timing">设置</span>
+                                </button>
+                            </div>
+                            
+                            <!-- 自定义时间设置 -->
+                            <div class="custom-timer-settings" id="customTimerSettings" style="display: none;">
+                                <div class="custom-time-inputs">
+                                    <div class="time-input-group">
+                                        <label for="customFocusTime">专注时长(分钟):</label>
+                                        <input type="number" id="customFocusTime" min="5" max="120" value="25">
+                                    </div>
+                                    <div class="time-input-group">
+                                        <label for="customBreakTime">休息时长(分钟):</label>
+                                        <input type="number" id="customBreakTime" min="1" max="30" value="5">
+                                    </div>
+                                    <div class="time-input-group">
+                                        <label for="customRounds">轮数:</label>
+                                        <input type="number" id="customRounds" min="1" max="8" value="4">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mode-description" id="modeDescription">
+                                专注25分钟，休息5分钟，4轮后长休息15分钟
+                            </div>
+                        </div>
+
+                        <div class="pomodoro-timer">
+                            <div class="timer-display">
+                                <div class="timer-circle">
+                                    <svg viewBox="0 0 100 100" class="progress-ring">
+                                        <defs>
+                                            <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                                <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                                            </linearGradient>
+                                        </defs>
+                                        <circle cx="50" cy="50" r="45" class="progress-ring-bg"></circle>
+                                        <circle cx="50" cy="50" r="45" class="progress-ring-fill" id="progressRing"></circle>
+                                    </svg>
+                                    <div class="timer-content">
+                                        <div class="timer" id="timer">25:00</div>
+                                        <div class="timer-status" id="timerStatus">准备开始</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timer-controls">
+                                <button class="btn btn-primary btn-large" id="startPomodoroBtn">
+                                    <span class="btn-icon">▶️</span>
+                                    开始专注
+                                </button>
+                                <button class="btn btn-warning btn-large" id="interruptPomodoroBtn" style="display: none;">
+                                    <span class="btn-icon">⏸️</span>
+                                    中断
+                                </button>
+                                <button class="btn btn-success btn-large" id="completePomodoroBtn" style="display: none;">
+                                    <span class="btn-icon">✅</span>
+                                    完成
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 当前会话信息 -->
+                        <div class="session-info" id="sessionInfo" style="display: none;">
+                            <div class="session-round">
+                                <span class="label">当前轮次:</span>
+                                <span class="value" id="currentRound">1/4</span>
+                            </div>
+                            <div class="session-type">
+                                <span class="label">阶段:</span>
+                                <span class="value" id="sessionType">专注时间</span>
+                            </div>
+                        </div>
+
+                        <div class="pomodoro-stats">
+                            <div class="stat-item">
+                                <div class="stat-label">今日专注</div>
+                                <div class="stat-value" id="todayFocusCount">0</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">总专注</div>
+                                <div class="stat-value" id="totalFocusCount">0</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">完成率</div>
+                                <div class="stat-value" id="completionRate">0%</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">中断率</div>
+                                <div class="stat-value" id="interruptionRate">0%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 情绪打卡区域 -->
+                    <div class="emotion-section" id="emotionSection" style="display: none;">
+                        <div class="emotion-header">
+                            <h4>💝 情绪打卡</h4>
+                            <div class="emotion-streak" id="emotionStreak">
+                                <span class="streak-label">连续打卡:</span>
+                                <span class="streak-count">3天</span>
+                            </div>
+                        </div>
+                        <p class="emotion-prompt">请为刚才的专注时段选择一个情绪感受：</p>
+                        
+                        <div class="emotion-grid">
+                            <button class="emotion-btn" data-emotion="😄" data-level="5">
+                                <span class="emotion-icon">😄</span>
+                                <span class="emotion-label">非常开心</span>
+                                <span class="emotion-desc">学习状态很棒</span>
+                            </button>
+                            <button class="emotion-btn" data-emotion="🙂" data-level="4">
+                                <span class="emotion-icon">🙂</span>
+                                <span class="emotion-label">感觉良好</span>
+                                <span class="emotion-desc">专注度不错</span>
+                            </button>
+                            <button class="emotion-btn" data-emotion="😐" data-level="3">
+                                <span class="emotion-icon">😐</span>
+                                <span class="emotion-label">一般般</span>
+                                <span class="emotion-desc">还算正常</span>
+                            </button>
+                            <button class="emotion-btn" data-emotion="😫" data-level="2">
+                                <span class="emotion-icon">😫</span>
+                                <span class="emotion-label">有点累</span>
+                                <span class="emotion-desc">需要休息</span>
+                            </button>
+                            <button class="emotion-btn" data-emotion="😵" data-level="1">
+                                <span class="emotion-icon">😵</span>
+                                <span class="emotion-label">很疲惫</span>
+                                <span class="emotion-desc">非常疲劳</span>
+                            </button>
+                        </div>
+
+                        <div class="emotion-note-section">
+                            <label for="emotionNote" class="note-label">📝 一句话感受（可选）：</label>
+                            <textarea id="emotionNote" placeholder="分享你的学习感受..." rows="2"></textarea>
+                        </div>
+
+                        <div class="emotion-suggestion" id="emotionSuggestion" style="display: none;">
+                            <div class="suggestion-icon">💡</div>
+                            <div class="suggestion-text">
+                                <strong>AI建议：</strong>
+                                <span id="suggestionText">检测到连续疲劳，建议休息15分钟后再继续学习</span>
+                            </div>
+                        </div>
+
+                        <div class="emotion-actions">
+                            <button class="btn btn-secondary" id="skipEmotionBtn">跳过</button>
+                            <button class="btn btn-primary" id="submitEmotionBtn" disabled>提交打卡</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    <script src="plan-detail.js"></script>
+</body>
+</html>

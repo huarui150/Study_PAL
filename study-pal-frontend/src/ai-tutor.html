@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyPAL+ AI辅导</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>StudyPAL+</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <span class="icon">🏠</span>
+                            <span class="text">仪表盘</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="courses.html">
+                            <span class="icon">📚</span>
+                            <span class="text">课程</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="plans.html">
+                            <span class="icon">📝</span>
+                            <span class="text">学习计划</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="ai-tutor.html">
+                            <span class="icon">🤖</span>
+                            <span class="text">AI辅导</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="achievements.html">
+                            <span class="icon">🏆</span>
+                            <span class="text">成就</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <span class="user-name" id="sidebarUserName">用户</span>
+                    <button class="logout-btn" onclick="logout()">退出</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 顶部导航 -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h2>AI智能辅导</h2>
+                    <p>您的专属智能学习助手</p>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-info">
+                        <span class="user-name" id="userName">用户</span>
+                        <div class="user-avatar">👤</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 内容区域 -->
+            <div class="content">
+                <!-- AI功能卡片 -->
+                <div class="ai-features-grid">
+                    <div class="ai-feature-card">
+                        <div class="feature-icon">📚</div>
+                        <h3>课程查询</h3>
+                        <p>智能查询形策课程安排</p>
+                        <div class="feature-stats">
+                            <span>今日课程: 2门</span>
+                        </div>
+                    </div>
+                    <div class="ai-feature-card">
+                        <div class="feature-icon">📅</div>
+                        <h3>校历信息</h3>
+                        <p>获取最新校历安排</p>
+                        <div class="feature-stats">
+                            <span>本周活动: 3个</span>
+                        </div>
+                    </div>
+                    <div class="ai-feature-card">
+                        <div class="feature-icon">🚌</div>
+                        <h3>班车时刻</h3>
+                        <p>实时班车时刻表</p>
+                        <div class="feature-stats">
+                            <span>今日班次: 8趟</span>
+                        </div>
+                    </div>
+                    <div class="ai-feature-card">
+                        <div class="feature-icon">🔧</div>
+                        <h3>系统状态</h3>
+                        <p>监控系统运行状态</p>
+                        <div class="feature-stats">
+                            <span>状态: 正常</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 智能聊天区域 -->
+                <div class="ai-chat-section">
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <div class="chat-header-left">
+                                <div class="ai-avatar">🤖</div>
+                                <div class="ai-info">
+                                    <h3>智能学习助手</h3>
+                                    <p>在线 · 随时为您服务</p>
+                                </div>
+                            </div>
+                            <div class="chat-header-right">
+                                <button class="chat-minimize" id="chatMinimize">−</button>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-messages" id="chatMessages">
+                            <!-- 欢迎消息 -->
+                            <div class="message received">
+                                <div class="message-avatar">AI</div>
+                                <div class="message-content">
+                                    <div class="welcome-message">
+                                        <h4>👋 您好！我是您的AI学习助手</h4>
+                                        <p>我可以帮您查询以下信息：</p>
+                                        <div class="quick-actions">
+                                            <button class="quick-action-btn" data-query="查询形策课程">
+                                                <span class="action-icon">📚</span>
+                                                <span class="action-text">形策课程</span>
+                                            </button>
+                                            <button class="quick-action-btn" data-query="查看校历信息">
+                                                <span class="action-icon">📅</span>
+                                                <span class="action-text">校历信息</span>
+                                            </button>
+                                            <button class="quick-action-btn" data-query="班车时刻表">
+                                                <span class="action-icon">🚌</span>
+                                                <span class="action-text">班车时刻</span>
+                                            </button>
+                                            <button class="quick-action-btn" data-query="系统状态">
+                                                <span class="action-icon">🔧</span>
+                                                <span class="action-text">系统状态</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-input-container">
+                            <div class="input-wrapper">
+                                <input type="text" id="messageInput" placeholder="输入您的问题，比如：今天的形策课是什么时候？" autocomplete="off">
+                                <button id="sendButton">
+                                    <span>发送</span>
+                                    <i class="send-icon">→</i>
+                                </button>
+                            </div>
+                            <div class="input-tips">
+                                <span>💡 提示：您可以询问课程、校历、班车等信息</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 使用统计 -->
+                <div class="ai-usage-stats">
+                    <h3>使用统计</h3>
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-icon">💬</div>
+                            <div class="stat-info">
+                                <h4>今日对话</h4>
+                                <p class="stat-value">12 <span>次</span></p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⏱️</div>
+                            <div class="stat-info">
+                                <h4>平均响应</h4>
+                                <p class="stat-value">1.2 <span>秒</span></p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🎯</div>
+                            <div class="stat-info">
+                                <h4>准确率</h4>
+                                <p class="stat-value">98% <span></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    <script src="ai-chat.js"></script>
+</body>
+</html>
