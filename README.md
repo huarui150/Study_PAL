@@ -73,13 +73,7 @@ python app.py
 
 前端：直接用浏览器打开 `study-pal-frontend/src/index.html`
 
-### Docker部署
 
-```bash
-docker-compose up -d
-```
-
----
 
 ## 📦 可执行成果
 
