@@ -1,6 +1,6 @@
 # StudyPAL+ AI学习伙伴
 
-> **参赛赛题：AI赋能学习与教育**
+> **参赛赛题：知识奇点**
 > **访问地址**：[http://study.linyang.ink/](http://study.linyang.ink/)
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
@@ -66,11 +66,6 @@ cd flaskProject
 
 # 安装依赖
 pip install -r requirements.txt
-
-# 初始化数据库
-mysql -u root -p
-CREATE DATABASE studypal CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-python create_tables.py
 
 # 启动服务
 python app.py
