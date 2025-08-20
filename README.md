@@ -1,7 +1,7 @@
 # StudyPAL+ AI学习伙伴
 
 > **参赛赛题：知识奇点**
-> **访问地址**：[http://study.linyang.ink/](http://study.linyang.ink/)
+> **访问地址**：[http://study.linyang.ink/](http://study.linyang.ink/)(网站中数据来自远程数据库，进入新页面请尝试刷新或等待真实数据更新)
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
 [![Flask](https://img.shields.io/badge/Flask-2.3.3-green.svg)](https://flask.palletsprojects.com)
@@ -53,7 +53,7 @@
 
 #### 环境要求
 
-* Python 3.8+
+* Python 3.12.9
 * MySQL 8.0+
 * 现代浏览器（支持ES6+）
 
@@ -72,7 +72,7 @@ python app.py
 ```
 
 前端：直接用浏览器打开 `study-pal-frontend/src/index.html`
-
+支持直接注册账号，若想体验可使用20242081627 shr113803 内含部分已有数据结果(网站中数据来自远程数据库，请尝试刷新或等待真实数据更新)
 
 
 ## 📦 可执行成果
