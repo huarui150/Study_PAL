@@ -88,6 +88,6 @@ python app.py
 
 ---
 
-✨ **StudyPAL+** —— 让AI成为学习的最佳伙伴
+✨ **StudyPAL+** —— 让AI成为学习的最佳伙伴（Notice 8月21日数据库可能暂时关闭无法连接）
 
 
