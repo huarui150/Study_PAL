@@ -1,7 +1,7 @@
 # StudyPAL+ AI学习伙伴
 
 > **参赛赛题：知识奇点**
-> **访问地址**：[http://study.linyang.ink/](http://study.linyang.ink/)(网站中数据来自远程数据库，进入新页面请尝试刷新或等待真实数据更新)
+> **访问地址**：[http://study.linyang.ink/](http://study.linyang.ink/)  本网站支持个人注册，但可以登录开发者本人账号(20242081627 sun123456)有数据可以看效果，数据来自远程数据库，加载需要时间
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
 [![Flask](https://img.shields.io/badge/Flask-2.3.3-green.svg)](https://flask.palletsprojects.com)
@@ -36,7 +36,7 @@
 ## ✨ 核心功能
 
 * **课程知识库**：上传PDF/PPT/Word等资料，自动生成知识卡片与测验题
-* **学习计划管理**：AI优化学习顺序，实时追踪进度
+* **学习计划管理**：AI优化学习顺序，实时追踪进度，支持倾向情绪反馈，动态更新学习建议
 * **番茄钟系统**：多模式计时，自适应调整，支持情绪打卡
 * **AI智能辅导**：课程问答、学习助教、校园助手
 * **成就激励体系**：18类成就、虚拟货币奖励、粒子动画反馈
